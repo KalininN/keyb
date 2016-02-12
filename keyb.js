@@ -49,7 +49,7 @@ var fNames = {
     'pascal_beginners.txt': 'Pascal для начинающих', 
     'cpp_beginners.txt': 'C++ для начинающих',
 	'cpp_kan.txt': 'Словарь KAN для C++',
-	'template_nnsu.cpp': 'Шаблон NNSU'
+	'template_nnsu.txt': 'Шаблон NNSU'
 };
 var fName = 'pascal_beginners.txt';
 //var fName = 'cpp_sample.txt';
@@ -281,7 +281,7 @@ function genText() {
                     seli = i;
             }
     } else {
-        if (wordNum == 0) {
+        if (wordNum == 1) {
             var seli = Math.floor(Math.random() * (samples.length - totalWords));
         } else {
             for (i=0; i<samples.length; i++)
