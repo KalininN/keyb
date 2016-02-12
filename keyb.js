@@ -48,7 +48,8 @@ var samples = [];
 var fNames = {
     'pascal_beginners.txt': 'Pascal для начинающих', 
     'cpp_beginners.txt': 'C++ для начинающих',
-	'cpp_kan.txt': 'Словарь KAN для C++'
+	'cpp_kan.txt': 'Словарь KAN для C++',
+	'template_nnsu.cpp': 'Шаблон NNSU'
 };
 var fName = 'pascal_beginners.txt';
 //var fName = 'cpp_sample.txt';
