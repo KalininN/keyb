@@ -54,6 +54,7 @@ var fNames = {
 var fName = 'pascal_beginners.txt';
 //var fName = 'cpp_sample.txt';
 var ignoreSpaces = true;
+var shuffle = true;
 
 var removeResults = function(){
     if ($.cookie(cookieKey)){
@@ -269,15 +270,27 @@ function keypressed(e) {
 }
 
 function genText() {
-    var nn = 0;
-    // the following makes us chose truly random if we have no samples left
-    var seli = Math.floor(Math.random()*samples.length);
-    for (i=0; i<samples.length; i++)
-        if (used[i]==0) {
-            nn++;
-            if (Math.floor(Math.random()*nn)==0)
-                seli = i;
+    if (shuffle) {
+        var nn = 0;
+        // the following makes us chose truly random if we have no samples left
+        var seli = Math.floor(Math.random()*samples.length);
+        for (i=0; i<samples.length; i++)
+            if (used[i]==0) {
+                nn++;
+                if (Math.floor(Math.random()*nn)==0)
+                    seli = i;
+            }
+    } else {
+        if (wordNum == 0) {
+            var seli = Math.floor(Math.random() * (samples.length - totalWords));
+        } else {
+            for (i=0; i<samples.length; i++)
+                if (used[i] == 0 && used[i - 1] == 1) {
+                    var seli = i;
+                    break;
+                }
         }
+    }
     used[seli] = 1;
     return samples[seli];
 }
@@ -314,6 +327,7 @@ function init(e) {
     e.preventDefault();
     $( "#start" ).remove();
     ignoreSpaces = $( "#ignoreSpaces" ).prop("checked");
+    shuffle = $( "#shuffle" ).prop("checked");
     totalWords = parseInt( $( "#numWords" ).val() , 10);
     var fNameNew = $("#fName").val();
     if (!(fNameNew in fNames)) {
@@ -322,6 +336,7 @@ function init(e) {
     }
     fName = fNameNew;
     $( "#ignoreSpaces" ).attr("disabled", "disabled");
+    $( "#shuffle" ).attr("disabled", "disabled");
     $( "#numWords" ).attr("disabled", "disabled");
     $( "#fName" ).attr("disabled", "disabled");
     loadDict(startWord);
@@ -339,6 +354,8 @@ function fullInit() {
     $( "#fName option[value='" + fName + "']" ).attr("selected", "selected");
     form.append("<div id='spacesDiv'><input type='checkbox' name='ignoreSpaces' id='ignoreSpaces' "
         + (ignoreSpaces ? "checked='checked' " : "" ) + "/> Игнорировать незначащие пробелы</div>");
+    form.append("<div id='shuffleDiv'><input type='checkbox' name='shuffle' id='shuffle' "
+        + (shuffle ? "checked='checked' " : "" ) + "/> Случайный порядок строк</div>");
     form.append("<div id='numWordsDiv'>Количество строк: <input type='text' name='numWords' id='numWords' checked='checked' value='"+totalWords+"'/></div>");
     form.append("<input type='submit' value='Начать!' onclick='' id='start'/>");
     form.submit(init);

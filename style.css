@@ -21,7 +21,7 @@ body {
     font-family:monospace;
 }
 
-#spacesDiv, #numWordsDiv, #fNameDiv {
+#spacesDiv, #shuffleDiv, #numWordsDiv, #fNameDiv {
     padding-bottom:1em;
 }
 
